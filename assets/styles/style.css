@@ -234,7 +234,7 @@ a:hover {
 
 .proust-quote p {
     margin: 0 0 1rem 0;
-    text-align: left;
+    text-align: justify;
 }
 
 .proust-quote cite {

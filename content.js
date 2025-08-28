@@ -4,7 +4,7 @@ export const contentMap = {
     <p>My name is Jake Welch and I'm a designer, creative technologist, and generative artist from Salt Lake UT, living in Brooklyn, NY. Most of my work is digital, made using code, but I find almost all of my inspiration from humans and their imaginations, both from the present, and from distant past. </p>
   `,
   "what-is-this": `
-    <p>This is an archive, a shrine, a memory, a portal, a sanctuary, an experiment, a poem–it's whatever I want it to be and whatever you think it is</p>
+    <p>A portal, a sanctuary, a memory, a shrine</p>
   `,
   "other-websites": `
     <ul>
