@@ -7,11 +7,22 @@
     <title>jakewel.ch</title>
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="assets/styles/audio-player.css">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/p5.js"></script>
 
 </head>
 
 <body>
+
+    <button class="audio-player-btn-minimal" id="audio-play-btn" aria-label="Play/Pause"
+        style="position:fixed;bottom:24px;right:24px;z-index:1000;background:none;border:none;padding:0;">
+        <svg id="audio-play-icon" width="44" height="44" viewBox="0 0 44 44" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="22" fill="none" />
+            <polygon points="17,13 33,22 17,31" fill="white" />
+        </svg>
+    </button>
+    <audio id="audio-element" src="assets/audio/dark-hologram.mp3" autoplay></audio>
     <div id="main"></div>
 
     <div class="content">
@@ -145,6 +156,36 @@
     }
     </script>
         <script type="module" src="main.js"></script>
+</body>
+<script>
+    // Minimal audio player logic
+    const audio = document.getElementById('audio-element');
+    const playBtn = document.getElementById('audio-play-btn');
+    const playIcon = document.getElementById('audio-play-icon');
+    let isPlaying = true;
+
+    function setPlayIcon(paused) {
+        playIcon.innerHTML = paused
+            ? '<circle cx="22" cy="22" r="22" fill="none"/><polygon points="17,13 33,22 17,31" fill="white"/>'
+            : '<circle cx="22" cy="22" r="22" fill="none"/><rect x="16" y="13" width="5" height="18" fill="white"/><rect x="24" y="13" width="5" height="18" fill="white"/>';
+    }
+
+    playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    });
+
+    audio.addEventListener('play', () => setPlayIcon(false));
+    audio.addEventListener('pause', () => setPlayIcon(true));
+
+    // Start with pause icon if autoplay works
+    window.addEventListener('DOMContentLoaded', () => {
+        setPlayIcon(audio.paused);
+    });
+</script>
 </body>
 
 </html>

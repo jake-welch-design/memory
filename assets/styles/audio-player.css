@@ -1,0 +1,20 @@
+.audio-player-btn-minimal {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.audio-player-btn-minimal svg {
+    width: 44px;
+    height: 44px;
+    display: block;
+}
