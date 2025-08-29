@@ -291,6 +291,25 @@ function initializeScene() {
   });
   currentThresholdMaterial = thresholdMaterial;
 
+  // --- Lerp threshold on page load ---
+  const initialThreshold = THRESHOLD;
+  THRESHOLD = 1;
+  thresholdMaterial.uniforms.threshold.value = THRESHOLD;
+  function lerpThresholdOnLoad(target, speed = 0.05) {
+    function step() {
+      THRESHOLD += (target - THRESHOLD) * speed;
+      thresholdMaterial.uniforms.threshold.value = THRESHOLD;
+      if (Math.abs(THRESHOLD - target) < 0.005) {
+        THRESHOLD = target;
+        thresholdMaterial.uniforms.threshold.value = THRESHOLD;
+      } else {
+        requestAnimationFrame(step);
+      }
+    }
+    step();
+  }
+  lerpThresholdOnLoad(initialThreshold);
+
   // Event handlers
   function updateThreshold(event) {
     event.preventDefault();
@@ -413,50 +432,79 @@ function initializeScene() {
       case "r": // Reload model
         if (currentModel && currentScene) {
           currentScene.remove(currentModel);
-
           const newSelectedModel = getRandomItem(AVAILABLE_MODELS);
           console.log(`Loading new model: ${newSelectedModel}`);
 
-          currentLoader.load(
-            `assets/models/${newSelectedModel}`,
-            function (gltf) {
-              console.log("New model loaded successfully");
-              currentModel = gltf.scene;
-              model = gltf.scene; // Also update the model variable used in animation loop
+          // Save the current threshold
+          const prevThreshold = THRESHOLD;
+          const lerpSpeed = 0.05;
 
-              currentModel.traverse(function (child) {
-                if (child.isMesh) {
-                  if (child.geometry) {
-                    child.geometry.computeVertexNormals();
-                  }
-                  child.material = currentThresholdMaterial;
+          // Helper to lerp threshold to a target value
+          function lerpThreshold(target, onComplete) {
+            function step() {
+              THRESHOLD += (target - THRESHOLD) * lerpSpeed;
+              if (currentThresholdMaterial) {
+                currentThresholdMaterial.uniforms.threshold.value = THRESHOLD;
+              }
+              if (Math.abs(THRESHOLD - target) < 0.005) {
+                THRESHOLD = target;
+                if (currentThresholdMaterial) {
+                  currentThresholdMaterial.uniforms.threshold.value = THRESHOLD;
                 }
-              });
-
-              currentScene.add(currentModel);
-              console.log("New model added to scene");
-
-              currentModel.scale.set(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
-              currentModel.position.set(
-                MODEL_POSITION.x,
-                MODEL_POSITION.y,
-                MODEL_POSITION.z
-              );
-
-              // Reset rotation state
-              targetRotation.set(0, 0);
-              currentRotation.set(0, 0);
-            },
-            function (progress) {
-              console.log(
-                "Loading progress:",
-                (progress.loaded / progress.total) * 100 + "%"
-              );
-            },
-            function (error) {
-              console.error("Error loading new GLB model:", error);
+                if (onComplete) onComplete();
+              } else {
+                requestAnimationFrame(step);
+              }
             }
-          );
+            step();
+          }
+
+          // Lerp up to 1, then load model, then lerp back
+          lerpThreshold(1, () => {
+            currentLoader.load(
+              `assets/models/${newSelectedModel}`,
+              function (gltf) {
+                console.log("New model loaded successfully");
+                currentModel = gltf.scene;
+                model = gltf.scene; // Also update the model variable used in animation loop
+
+                currentModel.traverse(function (child) {
+                  if (child.isMesh) {
+                    if (child.geometry) {
+                      child.geometry.computeVertexNormals();
+                    }
+                    child.material = currentThresholdMaterial;
+                  }
+                });
+
+                currentScene.add(currentModel);
+                console.log("New model added to scene");
+
+                currentModel.scale.set(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
+                currentModel.position.set(
+                  MODEL_POSITION.x,
+                  MODEL_POSITION.y,
+                  MODEL_POSITION.z
+                );
+
+                // Reset rotation state
+                targetRotation.set(0, 0);
+                currentRotation.set(0, 0);
+
+                // Lerp back to previous threshold
+                lerpThreshold(prevThreshold);
+              },
+              function (progress) {
+                console.log(
+                  "Loading progress:",
+                  (progress.loaded / progress.total) * 100 + "%"
+                );
+              },
+              function (error) {
+                console.error("Error loading new GLB model:", error);
+              }
+            );
+          });
         }
         break;
     }
