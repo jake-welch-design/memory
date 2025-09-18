@@ -133,7 +133,9 @@ function getTwoDifferentImages() {
 
 // Three.js scene setup
 function initializeScene() {
+  let previousModel = null;
   const selectedModel = getRandomItem(AVAILABLE_MODELS);
+  previousModel = selectedModel;
   console.log(`Loading random model: ${selectedModel}`);
   console.log(
     "Controls: Arrow keys to rotate, +/- to zoom, 'r' to reload model, 'x' to toggle image animation"
@@ -432,7 +434,15 @@ function initializeScene() {
       case "r": // Reload model
         if (currentModel && currentScene) {
           currentScene.remove(currentModel);
-          const newSelectedModel = getRandomItem(AVAILABLE_MODELS);
+          // Pick a new model that is not the same as the previous one
+          let newSelectedModel;
+          do {
+            newSelectedModel = getRandomItem(AVAILABLE_MODELS);
+          } while (
+            newSelectedModel === previousModel &&
+            AVAILABLE_MODELS.length > 1
+          );
+          previousModel = newSelectedModel;
           console.log(`Loading new model: ${newSelectedModel}`);
 
           // Save the current threshold
