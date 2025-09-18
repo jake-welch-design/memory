@@ -141,9 +141,18 @@ function initializeScene() {
     "Controls: Arrow keys to rotate, +/- to zoom, 'r' to reload model, 'x' to toggle image animation"
   );
 
-  // Set background image
-  document.body.style.background = `url('${selectedBackgroundImageURL}') no-repeat center center fixed`;
-  document.body.style.backgroundSize = "cover";
+  // Set background image with color fallback
+  const img = new window.Image();
+  img.src = selectedBackgroundImageURL;
+  img.onload = function () {
+    document.body.style.background = `url('${selectedBackgroundImageURL}') no-repeat center center fixed`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundColor = "";
+  };
+  // In case image is cached and loads instantly
+  if (img.complete) {
+    img.onload();
+  }
 
   // Scene, camera, renderer
   const scene = new THREE.Scene();
