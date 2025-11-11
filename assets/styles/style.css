@@ -42,44 +42,7 @@ h1 {
     text-align: left;
     color: transparent;
     text-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
-    font-size: 1.8rem;
-}
-
-.hover-container {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 0.5rem;
-}
-
-.hover-container:hover {}
-
-.list-item-header {
-    margin: 0.15rem 3rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: transparent;
-    text-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
-    user-select: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-}
-
-.list-item-header:hover {
-    color: transparent;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-}
-
-.list-item-header.active {
-    color: transparent;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 1);
-}
-
-.text-full {
-    display: none;
-    /* Hide all text-full content since it will appear in the display area */
+    font-size: 1.2rem;
 }
 
 .content-display {
@@ -116,13 +79,6 @@ h1 {
     font-size: 1rem;
 }
 
-/* #dynamic-content h3 {
-    margin: 0 0 1rem 0;
-    color: transparent;
-    text-shadow: 0 0 4px rgba(255, 255, 255, 1);
-    font-size: 1.2rem;
-} */
-
 #dynamic-content p {
     margin: 0 0 1rem 0;
 }
@@ -148,45 +104,6 @@ h1 {
 }
 
 
-/* Specific styling for HTML day */
-.html-day .list-item-header {
-    color: rgba(100, 255, 100, 0.8);
-    /* color: transparent; */
-    text-shadow: 0 0 2px rgba(100, 255, 100, 0.8);
-}
-
-.html-day:hover .list-item-header {
-    color: transparent;
-    text-shadow: 0 0 10px rgba(100, 255, 100, 0.8);
-
-}
-
-.html-full a {
-    color: rgba(100, 255, 100, 0.8);
-    text-shadow: 0 0 2px rgba(100, 255, 100, 0.8);
-    font-size: 1rem;
-    text-decoration: none;
-}
-
-.html-full a:hover {
-    text-shadow: 0 0 5px rgba(100, 255, 100, 0.9);
-    text-decoration: underline;
-}
-
-/* .thought-full {
-    color: white;
-    font-size: 5rem;
-    text-align: left;
-    line-height: 1;
-} */
-
-.html-day a {
-    color: rgba(100, 255, 100, 1);
-    text-shadow: 0 0 2px rgba(100, 255, 100, 0.8);
-    font-size: 1rem;
-    text-decoration: none;
-}
-
 a {
     color: transparent;
     text-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
@@ -198,16 +115,21 @@ a:hover {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
 }
 
-.text-full {
-    line-height: 1.2;
-    font-size: 1rem;
-    text-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
-
+.instructions {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    padding: 1rem;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+    color: transparent;
+    font-size: 0.9rem;
+    z-index: 10;
 }
 
 .quote-container {
     position: fixed;
-    right: 0.2rem;
+    left: 0.2rem;
     top: 50%;
     transform: translateY(-50%);
     width: 400px;
@@ -264,20 +186,6 @@ footer {
 
 
 
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
 @media (max-width: 600px) {
     .content {
         padding: 1rem;
@@ -286,15 +194,6 @@ footer {
     h1 {
         font-size: 2rem;
         margin-bottom: 1.5rem;
-    }
-
-    .hover-container {
-        max-width: 100%;
-    }
-
-    .list-item-header {
-        padding: 0.1rem;
-        margin: 0.1rem 1rem;
     }
 
     .content-display {

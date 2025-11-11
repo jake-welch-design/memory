@@ -1,13 +1,11 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import { initializeContentDisplay } from "./contentDisplay.js";
 
 // Configuration
 const MODEL_SCALE = 0.4;
 const MODEL_POSITION = { x: 0, y: -0.2, z: 0 };
 let THRESHOLD = 0.9;
-const ROT_SPEED = 0.0;
 const rotationAmount = 0.2;
 const LERP_FACTOR = 0.05;
 
@@ -612,8 +610,3 @@ function initializeScene() {
 }
 
 initializeApp();
-
-// Initialize content display functionality for menu items
-document.addEventListener("DOMContentLoaded", function () {
-  initializeContentDisplay();
-});
